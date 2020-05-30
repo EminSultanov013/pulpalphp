@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Services\PaymentGatewayPulPal;
+use Illuminate\Http\Request;
+
+class CartController extends Controller
+{
+    public function index() {
+
+        $order_id = '300520354'; // id заказа
+        $sum = 5;
+
+        $pulpal = new PaymentGatewayPulPal();
+        $payment_link = $pulpal->getUrl($order_id, $sum * 100, 'Order ID: ' . $order_id);
+
+        $data = [
+            "payment_link" =>  $payment_link,
+        ];
+
+        return view("cart", $data);
+    }
+}
